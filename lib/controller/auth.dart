@@ -8,7 +8,7 @@ import 'package:flutter_application_3/bottom_screens/home_layout.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
-  String? email, password, name, selectedItem;
+  String? email, password, name, selectedItem, picture = 'assets/p.png';
 
   FirebaseAuth auth = FirebaseAuth.instance;
   final Rxn<User> _user = Rxn<User>();
@@ -58,8 +58,8 @@ class AuthController extends GetxController {
       userId: user.user!.uid,
       email: user.user!.email,
       name: name,
-      selectedItem: selectedItem,
-      pic: '',
+      selectedItem: item,
+      pic: picture,
     ));
   }
 
@@ -74,7 +74,7 @@ class AuthController extends GetxController {
   }
 
 //DrobDownButton
-  String selectedItems = 'First Level';
+  String? item;
   List<String> items = [
     'First Level',
     'Second Level',
@@ -82,6 +82,6 @@ class AuthController extends GetxController {
     'Fourth Level',
   ];
   void ChangeSelected(value) {
-    selectedItems = value;
+    item = value;
   }
 }
