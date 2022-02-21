@@ -6,7 +6,6 @@ import 'package:flutter_application_3/constant/const.dart';
 class DefaultFormField extends StatelessWidget {
   DefaultFormField({
     Key? key,
-    this.controller,
     required this.validator,
     required this.type,
     required this.icon,
@@ -14,6 +13,8 @@ class DefaultFormField extends StatelessWidget {
     this.suffixPress,
     this.isPassword = false,
     this.suffix,
+    this.controller,
+    this.hint,
   }) : super(key: key);
   TextInputType type;
   TextEditingController? controller;
@@ -23,12 +24,13 @@ class DefaultFormField extends StatelessWidget {
   Function onSave;
   FormFieldValidator validator;
   bool isPassword;
+  String? hint;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       validator: validator,
       obscureText: isPassword,
-      controller: controller,
       keyboardType: type,
       onSaved: (s) {
         onSave(s);
@@ -41,6 +43,8 @@ class DefaultFormField extends StatelessWidget {
         focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.lightBlue),
             borderRadius: BorderRadius.circular(10)),
+        hintText: hint,
+        hintStyle: const TextStyle(color: Colors.grey),
         prefixIcon: Icon(
           icon,
           color: Colors.grey,

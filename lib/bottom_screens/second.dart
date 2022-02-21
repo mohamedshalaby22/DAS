@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_unnecessary_containers
+
 import 'package:flutter/material.dart';
 
 class SecondScreen extends StatelessWidget {
@@ -7,7 +9,7 @@ class SecondScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        child: Text('2',style: TextStyle(color: Colors.black,)),
+        child: const Text('2',style: TextStyle(color: Colors.black,)),
       ),
     );
   }

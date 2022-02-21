@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_unnecessary_containers
+
 import 'package:flutter/material.dart';
 
 class ThirdScreen extends StatelessWidget {
@@ -7,7 +9,7 @@ class ThirdScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        child: Text('3',
+        child: const Text('3',
             style: TextStyle(
               color: Colors.black,
             )),

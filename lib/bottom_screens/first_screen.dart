@@ -4,14 +4,16 @@ import 'package:flutter_application_3/Screens/on_borading_screen.dart';
 import 'package:flutter_application_3/components/text2.dart';
 import 'package:flutter_application_3/constant/const.dart';
 import 'package:flutter_application_3/details/detail1.dart';
-import 'package:get/get.dart';
+import 'package:page_transition/page_transition.dart';
 
 class Data {
   String subjects;
+  String doctorName;
   Color color;
   Data({
     required this.subjects,
     required this.color,
+    required this.doctorName,
   });
 }
 
@@ -25,25 +27,25 @@ class FirstScreen extends StatefulWidget {
 class _FirstScreenState extends State<FirstScreen> {
   List<Data> items = [
     Data(
-      subjects: 'Computer Graphics',
-      color: Colors.red,
-    ),
+        subjects: 'Computer Graphics',
+        color: Colors.red,
+        doctorName: 'Marawa Kashaba'),
     Data(
-      subjects: 'Wireless and\nMobile NetWorks',
-      color: Colors.purpleAccent,
-    ),
+        subjects: 'Wireless and\nMobile NetWorks',
+        color: Colors.purpleAccent,
+        doctorName: 'Ehab Rushdy'),
     Data(
-      subjects: 'Virtual Reality',
-      color: Colors.amber,
-    ),
+        subjects: 'Virtual Reality',
+        color: Colors.amber,
+        doctorName: 'Osama ElKomy'),
     Data(
-      subjects: 'Selected Topics',
-      color: Colors.pinkAccent,
-    ),
+        subjects: 'Selected Topics',
+        color: Colors.pinkAccent,
+        doctorName: 'Walled Kheder '),
     Data(
-      subjects: 'Computer Animation',
-      color: const Color(0xff26a69a),
-    ),
+        subjects: 'Computer Animation',
+        color: const Color(0xff26a69a),
+        doctorName: 'Hanna Hamaza '),
   ];
 
   int _currentIndex = -1;
@@ -54,7 +56,12 @@ class _FirstScreenState extends State<FirstScreen> {
       floatingActionButton: _currentIndex >= 0
           ? FloatingActionButton(
               onPressed: () {
-                Get.to(Detail1(items[_currentIndex]));
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.leftToRight,
+                        child: Detail1(items[_currentIndex])));
+                //  Get.to(Detail1(items[_currentIndex]));
               },
               child: const Icon(Icons.arrow_forward_ios_rounded),
             )

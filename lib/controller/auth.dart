@@ -8,7 +8,7 @@ import 'package:flutter_application_3/bottom_screens/home_layout.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
-  String? email, password, name, selectedItem, picture = 'assets/p.png';
+  String? email, password, name, selectedItem;
 
   FirebaseAuth auth = FirebaseAuth.instance;
   final Rxn<User> _user = Rxn<User>();
@@ -59,7 +59,7 @@ class AuthController extends GetxController {
       email: user.user!.email,
       name: name,
       selectedItem: item,
-      pic: picture,
+      pic: '',
     ));
   }
 

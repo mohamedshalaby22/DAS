@@ -1,9 +1,6 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/Screens/login.dart';
 import 'package:flutter_application_3/bottom_screens/home_layout.dart';
-import 'package:flutter_application_3/constant/const.dart';
 import 'package:get/get.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -17,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Timer(const Duration(seconds: 3), () {
-     Get.offAll(const HomeLayOut());
+      Get.offAll(const HomeLayOut());
     });
     super.initState();
   }
@@ -27,21 +24,19 @@ class _SplashScreenState extends State<SplashScreen> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-            child: SizedBox(
+            child: Container(
                 width: width * 0.60,
                 height: height * 0.45,
-                child: Image.asset('assets/sp.png')),
+                clipBehavior: Clip.hardEdge,
+                decoration: const BoxDecoration(shape: BoxShape.circle),
+                child: Image.asset('assets/s.jpeg')),
           ),
-          const SizedBox(
-            height: defaultPading ,
-          ),
-          CircularProgressIndicator(
-            color: primaryColor,
-          )
         ],
       ),
     );

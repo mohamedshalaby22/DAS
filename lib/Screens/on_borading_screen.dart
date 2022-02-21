@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_3/Screens/login.dart';
 import 'package:flutter_application_3/components/default_button.dart';
 import 'package:flutter_application_3/constant/const.dart';
+import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -132,10 +133,7 @@ class _HomePageState extends State<HomePage> {
                           : 'Next',
                       onPressed: () {
                         if (_currentIndex == splashData.length - 1) {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignIn()));
+                          Get.offAll(SignIn());
                         }
                         _controller.nextPage(
                             duration: const Duration(milliseconds: 100),

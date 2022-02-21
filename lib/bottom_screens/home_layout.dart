@@ -18,7 +18,7 @@ class HomeLayOut extends StatelessWidget {
           selectedItemColor: primaryColor,
           unselectedItemColor: Colors.grey,
           backgroundColor: Colors.white,
-          elevation: 0.0,
+          elevation: 20,
           currentIndex: value.currentIndex,
           onTap: (index) => value.chanagecurrentIndex(index),
           items: value.bottomItem,

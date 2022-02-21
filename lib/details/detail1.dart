@@ -1,10 +1,13 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors_in_immutables
-
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors_in_immutables, must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/bottom_screens/first_screen.dart';
 import 'package:flutter_application_3/components/leading_icon.dart';
 import 'package:flutter_application_3/components/text2.dart';
 import 'package:flutter_application_3/constant/const.dart';
+import 'package:flutter_application_3/details/aaignments.dart';
+import 'package:flutter_application_3/details/attachments.dart';
+import 'package:flutter_application_3/details/posts.dart';
+import 'package:page_transition/page_transition.dart';
 
 class Detail1 extends StatelessWidget {
   final Data data;
@@ -13,6 +16,8 @@ class Detail1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(leading: const LeadingIcon()),
       body: Padding(
@@ -21,6 +26,7 @@ class Detail1 extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text2(
                 text: data.subjects,
@@ -28,81 +34,73 @@ class Detail1 extends StatelessWidget {
               const SizedBox(
                 height: defaultPading,
               ),
-              const ListTile(
-                leading: CircleAvatar(
-                    radius: 20, backgroundImage: AssetImage('assets/p1.png')),
-                title: Text(
-                  'Dr:Marawa ali',
-                  style: TextStyle(color: Colors.black),
-                ),
-                trailing: Icon(Icons.more_horiz_rounded),
-              ),
               Container(
-                margin: const EdgeInsets.only(
-                    top: defaultPading / 2, bottom: defaultPading),
-                padding: const EdgeInsets.all(defaultPading / 2),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.grey.shade50,
-                  //border: Border.all(color: Colors.black)
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'غدا ان شاء الله بعد المحاضره الاولي كل التيمات تيجي عندي المكتب بالدور عشان نبدا نشوف مشاريع التخرج بالتوفيق',
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                          fontSize: 18, color: Colors.black, height: 1.5),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          top: defaultPading, bottom: defaultPading),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Image.asset('assets/re.png',
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                            height: 200),
+                  width: width,
+                  padding: const EdgeInsets.all(defaultPading),
+                  decoration: decoration,
+                  child: Column(
+                    children: [
+                      ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.asset('assets/re.png')),
+                      const SizedBox(
+                        height: defaultPading,
                       ),
-                    ),
-                    Text('0 Comment',
-                        style: TextStyle(color: Colors.grey.shade500)),
-                    const Padding(
-                      padding: EdgeInsets.only(
-                          top: defaultPading / 3, bottom: defaultPading / 3),
-                      child: Divider(
-                        thickness: 1,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        const CircleAvatar(
-                            radius: 20,
-                            backgroundImage: AssetImage('assets/p1.png')),
-                        const SizedBox(
-                          width: defaultPading / 2,
-                        ),
-                        Expanded(
-                          child: Container(
-                            height: 45,
-                            decoration: BoxDecoration(
-                                color: Colors.grey.shade200,
-                                borderRadius: BorderRadius.circular(20)),
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: defaultPading / 2, top: 12),
-                              child: Text(
-                                'Add Comment',
-                                style: TextStyle(color: Colors.grey.shade500),
-                              ),
-                            ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.person_outlined,
+                            color: primaryColor,
                           ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            'Dr: ' + data.doctorName,
+                            style: TextStyle(
+                                color: Colors.grey.shade600,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )),
+              const SizedBox(
+                height: defaultPading * 3,
+              ),
+              DefaultCont(
+                iconData: Icons.post_add_outlined,
+                text: 'Posts',
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          type: PageTransitionType.leftToRight,
+                          child: const Posts()));
+                },
+              ),
+              DefaultCont(
+                iconData: Icons.assignment_outlined,
+                text: 'Assignments',
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          type: PageTransitionType.leftToRight,
+                          child: Assignments()));
+                },
+              ),
+              DefaultCont(
+                iconData: Icons.menu_book_outlined,
+                text: 'Attachments',
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          type: PageTransitionType.leftToRight,
+                          child: const Attachments()));
+                },
               ),
             ],
           ),
@@ -111,3 +109,56 @@ class Detail1 extends StatelessWidget {
     );
   }
 }
+
+class DefaultCont extends StatelessWidget {
+  DefaultCont({
+    Key? key,
+    required this.iconData,
+    required this.onPressed,
+    required this.text,
+  }) : super(key: key);
+  String text;
+  IconData iconData;
+  Function onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        onPressed();
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: defaultPading),
+        alignment: Alignment.center,
+        padding: const EdgeInsets.all(defaultPading / 1.5),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  secColor,
+                  thiColor,
+                ])),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(iconData, color: Colors.white),
+            const SizedBox(
+              width: 5,
+            ),
+            Text(text,
+                style: TextStyle(
+                  color: wprimary,
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                )),
+          ],
+        ),
+      ),
+    );
+  }
+}
+/*
+ 
+*/
