@@ -1,6 +1,5 @@
 // ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/Screens/on_borading_screen.dart';
 import 'package:flutter_application_3/components/text2.dart';
 import 'package:flutter_application_3/constant/const.dart';
 import 'package:flutter_application_3/details/detail1.dart';
@@ -28,11 +27,11 @@ class _FirstScreenState extends State<FirstScreen> {
   List<Data> items = [
     Data(
         subjects: 'Computer Graphics',
-        color: Colors.red,
+        color: Colors.purpleAccent,
         doctorName: 'Marawa Kashaba'),
     Data(
         subjects: 'Wireless and\nMobile NetWorks',
-        color: Colors.purpleAccent,
+        color: Colors.lightGreenAccent,
         doctorName: 'Ehab Rushdy'),
     Data(
         subjects: 'Virtual Reality',
@@ -44,7 +43,7 @@ class _FirstScreenState extends State<FirstScreen> {
         doctorName: 'Walled Kheder '),
     Data(
         subjects: 'Computer Animation',
-        color: const Color(0xff26a69a),
+        color: Colors.lightBlueAccent,
         doctorName: 'Hanna Hamaza '),
   ];
 
@@ -67,25 +66,24 @@ class _FirstScreenState extends State<FirstScreen> {
             )
           : null,
       appBar: AppBar(
-        centerTitle: true,
-        leading: const Padding(
-          padding: EdgeInsets.only(left: defaultPading / 2),
-          child: DasText(),
+        title: Text(
+          'DAS',
+          style: TextStyle(
+              color: primaryColor, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        leadingWidth: 70,
         actions: [
           Stack(
             children: [
               IconButton(
                   color: Colors.white,
-                  iconSize: 27,
+                  iconSize: 25,
                   onPressed: () {},
                   icon: Icon(
                     Icons.notifications,
                     color: primaryColor,
                   )),
               const Positioned(
-                right: 6,
+                right: 7,
                 top: 6,
                 child: CircleAvatar(
                   radius: 8,
@@ -131,14 +129,20 @@ class _FirstScreenState extends State<FirstScreen> {
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 400),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.grey.shade50,
-                            border: Border.all(
-                                width: 2,
-                                color: _currentIndex == index
-                                    ? primaryColor
-                                    : primaryColor.withOpacity(0)),
-                          ),
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.grey.shade50,
+                              border: Border.all(
+                                  width: 1,
+                                  color: _currentIndex == index
+                                      ? primaryColor
+                                      : Colors.grey.shade200),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.blue.shade50,
+                                    offset: const Offset(4, 4),
+                                    blurRadius: 15,
+                                    spreadRadius: 1),
+                              ]),
                           child: Center(
                               child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
