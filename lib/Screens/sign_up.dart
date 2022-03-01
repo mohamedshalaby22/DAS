@@ -6,26 +6,24 @@ import 'package:flutter_application_3/components/text1.dart';
 import 'package:flutter_application_3/constant/const.dart';
 import 'package:flutter_application_3/controller/auth.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({Key? key}) : super(key: key);
-
-  @override
-  State<SignUp> createState() => _SignUpState();
-}
-
-class _SignUpState extends State<SignUp> {
+class SignUp extends StatelessWidget {
+  SignUp({Key? key}) : super(key: key);
   var formKey = GlobalKey<FormState>();
-  bool isChecked = false;
+  AuthController controller = AuthController();
+  getUser() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString('name', controller.name.toString());
+  }
 
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: GetBuilder<AuthController>(
-        init: AuthController(),
-        builder: (controller) => Padding(
+      body: Obx(
+        () => Padding(
           padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
@@ -89,6 +87,7 @@ class _SignUpState extends State<SignUp> {
                             if (value.isEmpty) {
                               return 'Please enter the name';
                             }
+                            return null;
                           },
                           type: TextInputType.name,
                           icon: Icons.person),
@@ -107,6 +106,7 @@ class _SignUpState extends State<SignUp> {
                             if (value.isEmpty) {
                               return 'Please enter the email';
                             }
+                            return null;
                           },
                           type: TextInputType.emailAddress,
                           icon: Icons.email),
@@ -122,13 +122,17 @@ class _SignUpState extends State<SignUp> {
                           if (value.isEmpty) {
                             return 'Please enter the password';
                           }
+                          return null;
                         },
                         type: TextInputType.visiblePassword,
                         icon: Icons.lock,
-                        isPassword: controller.isPassword,
-                        suffix: controller.suffix,
+                        isPassword: controller.isPassword.value,
+                        suffix: controller.isPassword.value
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
                         suffixPress: () {
-                          controller.changeSuffix();
+                          controller.isPassword.value =
+                              !controller.isPassword.value;
                         },
                         onSave: (value) {
                           controller.password = value;
@@ -172,11 +176,9 @@ class _SignUpState extends State<SignUp> {
                         children: [
                           Checkbox(
                               activeColor: primaryColor,
-                              value: isChecked,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  isChecked = newValue!;
-                                });
+                              value: controller.isChecked.value,
+                              onChanged: (value) {
+                                controller.OnPageChanged(value!);
                               }),
                           Text1(
                             text: 'I Agree to the terms and  policy',
@@ -188,10 +190,21 @@ class _SignUpState extends State<SignUp> {
                         onPressed: () {
                           formKey.currentState!.save();
                           if (formKey.currentState!.validate()) {
+                            controller.isLoading.value
+                                ? null
+                                : controller.loadCircleProgress();
                             controller.CreateAccountWithEmailAndPassword();
+                            getUser();
                           }
                         },
                       ),
+                      const SizedBox(
+                        height: defaultPading,
+                      ),
+                      Align(
+                          child: controller.isLoading.value
+                              ? const CircularProgressIndicator()
+                              : null),
                     ],
                   ),
                   const SizedBox(

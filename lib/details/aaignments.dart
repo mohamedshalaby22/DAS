@@ -78,6 +78,7 @@ class Assignments extends StatelessWidget {
                           if (value.isEmpty) {
                             return 'Please enter the iD';
                           }
+                          return null;
                         },
                         type: TextInputType.number,
                         hint: 'enter your id',

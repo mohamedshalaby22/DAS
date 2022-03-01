@@ -51,7 +51,7 @@ class DegressPage extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: Colors.grey.shade50,
                           border: Border.all(
-                            color: Colors.grey.shade400,
+                            color: Colors.grey.shade300,
                           )),
                       child: Column(
                         children: [
@@ -90,7 +90,7 @@ class DegressPage extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: Colors.grey.shade50,
                           border: Border.all(
-                            color: Colors.grey.shade400,
+                            color: Colors.grey.shade300,
                           )),
                       child: Column(
                         children: [
@@ -145,7 +145,7 @@ class LocalSa extends StatelessWidget {
             child: Container(
               width: double.infinity,
               height: 1,
-              color: Colors.grey.shade400,
+              color: Colors.grey.shade300,
             ),
           ),
           const SizedBox(

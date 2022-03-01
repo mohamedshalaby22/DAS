@@ -1,15 +1,20 @@
 // ignore_for_file: non_constant_identifier_names, avoid_print
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_application_3/Models/user_model.dart';
 import 'package:flutter_application_3/Services/fire_store.dart';
 import 'package:flutter_application_3/bottom_screens/home_layout.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController extends GetxController {
   String? email, password, name, selectedItem;
-
+  var isLoading = false.obs;
+  RxBool isPassword = true.obs;
+  var isChecked = false.obs;
+  var isProfilePickedPath = false.obs;
+  var profilePickedPath = "".obs;
+  String? imagePath;
   FirebaseAuth auth = FirebaseAuth.instance;
   final Rxn<User> _user = Rxn<User>();
   //عشان اعرض قيمه اليوزر
@@ -17,6 +22,7 @@ class AuthController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
     //هنا لو حصل اي تغيير من اي حاجه بعمل تسجيل دخول بيها هتسمع هنا
     _user.bindStream(auth.authStateChanges());
   }
@@ -25,7 +31,9 @@ class AuthController extends GetxController {
     try {
       await auth
           .signInWithEmailAndPassword(email: email!, password: password!)
-          .then((value) => print(value));
+          .then((value) => Get.snackbar(
+              'Successfully Login', 'Welcome In Our App',
+              snackPosition: SnackPosition.BOTTOM));
       Get.offAll(const HomeLayOut());
     } on FirebaseException catch (e) {
       print(e.message);
@@ -44,7 +52,8 @@ class AuthController extends GetxController {
           .then((user) async {
         saveUser(user);
       });
-
+      Get.snackbar('Successfully Login', 'Welcome $name',
+          snackPosition: SnackPosition.BOTTOM);
       Get.offAll(const HomeLayOut());
     } on FirebaseException catch (e) {
       print(e);
@@ -63,16 +72,6 @@ class AuthController extends GetxController {
     ));
   }
 
-//Suffix Icon
-  bool isPassword = true;
-  IconData suffix = Icons.visibility_off_outlined;
-  changeSuffix() {
-    isPassword = !isPassword;
-    suffix =
-        isPassword ? Icons.visibility_off_outlined : Icons.visibility_outlined;
-    update();
-  }
-
 //DrobDownButton
   String? item;
   List<String> items = [
@@ -83,5 +82,38 @@ class AuthController extends GetxController {
   ];
   void ChangeSelected(value) {
     item = value;
+  }
+
+  //Loading CircleProgress In Press Login
+  void loadCircleProgress() async {
+    isLoading.value = true;
+    await Future.delayed(const Duration(seconds: 3));
+    isLoading.value = false;
+  }
+
+//CHEACK BOX
+  OnPageChanged(bool value) {
+    isChecked.value = value;
+    print(value);
+    update();
+  }
+
+  //IMAGE PICKER
+  void pickedPath(String path) {
+    profilePickedPath.value = path;
+    isProfilePickedPath.value = true;
+  }
+
+  //Save Image
+  saveImage(String path) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    await preferences.setString('imagePath', path);
+  }
+
+  loadImage() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    imagePath = preferences.getString('imagePath');
   }
 }

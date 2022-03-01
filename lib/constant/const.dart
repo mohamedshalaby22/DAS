@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 
 Color primaryColor = Colors.blue;
@@ -11,3 +13,4 @@ final Decoration decoration = BoxDecoration(
   color: Colors.grey.shade50,
   borderRadius: BorderRadius.circular(20),
 );
+const CACHED_USER_DATA = "CACHED_USER_DATA";

@@ -11,18 +11,17 @@ import 'package:get/get.dart';
 
 class SignIn extends StatelessWidget {
   SignIn({Key? key}) : super(key: key);
-  // var email = TextEditingController();
-  // var password = TextEditingController();
+  var isLoading = false;
   var formKey = GlobalKey<FormState>();
+  AuthController controller = AuthController();
 
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: GetBuilder<AuthController>(
-        init: AuthController(),
-        builder: (controller) => Padding(
+      body: Obx(
+        () => Padding(
           padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
           child: SingleChildScrollView(
             child: Form(
@@ -85,6 +84,7 @@ class SignIn extends StatelessWidget {
                             if (value.isEmpty) {
                               return 'Please enter the email';
                             }
+                            return null;
                           },
                           type: TextInputType.emailAddress,
                           icon: Icons.email),
@@ -103,13 +103,17 @@ class SignIn extends StatelessWidget {
                           if (value.isEmpty) {
                             return 'Please enter the password';
                           }
+                          return null;
                         },
                         type: TextInputType.visiblePassword,
                         icon: Icons.lock,
-                        isPassword: controller.isPassword,
-                        suffix: controller.suffix,
+                        isPassword: controller.isPassword.value,
+                        suffix: controller.isPassword.value
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
                         suffixPress: () {
-                          controller.changeSuffix();
+                          controller.isPassword.value =
+                              !controller.isPassword.value;
                         },
                       ),
                       const SizedBox(
@@ -120,15 +124,22 @@ class SignIn extends StatelessWidget {
                         onPressed: () {
                           formKey.currentState!.save();
                           if (formKey.currentState!.validate()) {
+                            controller.isLoading.value
+                                ? null
+                                : controller.loadCircleProgress();
                             controller.SignInWithEmailAndPassword();
                           }
                         },
                       ),
+                      const SizedBox(
+                        height: defaultPading,
+                      ),
+                      Align(
+                          child: controller.isLoading.value
+                              ? const CircularProgressIndicator()
+                              : null),
                     ],
                   ),
-                  /*
-                 
-                  */
                   const SizedBox(
                     height: defaultPading * 2,
                   ),
@@ -157,7 +168,7 @@ class SignIn extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const SignUp()));
+                                      builder: (context) => SignUp()));
                             },
                             child: Text1(
                               text: 'Sign-Up',
