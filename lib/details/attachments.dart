@@ -6,7 +6,7 @@ import 'package:flutter_application_3/components/text1.dart';
 import 'package:flutter_application_3/components/text2.dart';
 import 'package:flutter_application_3/constant/const.dart';
 import 'package:flutter_application_3/details/degrees.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:get/get.dart';
 
 class Attachments extends StatelessWidget {
   const Attachments({Key? key}) : super(key: key);
@@ -37,11 +37,8 @@ class Attachments extends StatelessWidget {
                 image: 'assets/grades.jpg',
                 text: 'Subjects Degress',
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.leftToRight,
-                          child: const DegressPage()));
+                  Get.to(const DegressPage(),
+                      transition: Transition.leftToRight);
                 },
               ),
               ContainerData(

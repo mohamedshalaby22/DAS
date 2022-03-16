@@ -1,14 +1,15 @@
 // ignore_for_file: non_constant_identifier_names, avoid_print
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_3/Models/user_model.dart';
 import 'package:flutter_application_3/Services/fire_store.dart';
 import 'package:flutter_application_3/bottom_screens/home_layout.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController extends GetxController {
   String? email, password, name, selectedItem;
+  var resetEmail = TextEditingController();
   var isLoading = false.obs;
   RxBool isPassword = true.obs;
   var isChecked = false.obs;
@@ -34,7 +35,7 @@ class AuthController extends GetxController {
           .then((value) => Get.snackbar(
               'Successfully Login', 'Welcome In Our App',
               snackPosition: SnackPosition.BOTTOM));
-      Get.offAll(const HomeLayOut());
+      Get.offAll(const HomeLayOut(), transition: Transition.leftToRight);
     } on FirebaseException catch (e) {
       print(e.message);
       Get.snackbar('Error Login Account', e.message.toString(),
@@ -54,11 +55,19 @@ class AuthController extends GetxController {
       });
       Get.snackbar('Successfully Login', 'Welcome $name',
           snackPosition: SnackPosition.BOTTOM);
-      Get.offAll(const HomeLayOut());
+      Get.offAll(const HomeLayOut(), transition: Transition.leftToRight);
     } on FirebaseException catch (e) {
-      print(e);
       Get.snackbar('Error Login Account', e.message.toString(),
           snackPosition: SnackPosition.BOTTOM);
+    }
+  }
+
+  void ForgetPassword(String email) async {
+    try {
+      await auth.sendPasswordResetEmail(email: email);
+      Get.snackbar('Successfully Reseted', 'password Reset Email Sent');
+    } on FirebaseException catch (e) {
+      Get.snackbar('Faild Reset Password', e.message.toString());
     }
   }
 
@@ -94,26 +103,11 @@ class AuthController extends GetxController {
 //CHEACK BOX
   OnPageChanged(bool value) {
     isChecked.value = value;
-    print(value);
-    update();
   }
 
   //IMAGE PICKER
   void pickedPath(String path) {
     profilePickedPath.value = path;
     isProfilePickedPath.value = true;
-  }
-
-  //Save Image
-  saveImage(String path) async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-
-    await preferences.setString('imagePath', path);
-  }
-
-  loadImage() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-
-    imagePath = preferences.getString('imagePath');
   }
 }

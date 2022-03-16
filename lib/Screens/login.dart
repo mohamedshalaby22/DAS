@@ -9,9 +9,11 @@ import 'package:flutter_application_3/constant/const.dart';
 import 'package:flutter_application_3/controller/auth.dart';
 import 'package:get/get.dart';
 
+import 'forget_passowrd.dart';
+
 class SignIn extends StatelessWidget {
   SignIn({Key? key}) : super(key: key);
-  var isLoading = false;
+  //var isLoading = false;
   var formKey = GlobalKey<FormState>();
   AuthController controller = AuthController();
 
@@ -146,9 +148,15 @@ class SignIn extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text1(
-                        text: 'Forget Password?',
-                        color: primaryColor,
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(ForgetPassword(),
+                              transition: Transition.leftToRight);
+                        },
+                        child: Text1(
+                          text: 'Forget Password?',
+                          color: primaryColor,
+                        ),
                       ),
                       const Divider(
                         thickness: 1.5,
@@ -165,10 +173,8 @@ class SignIn extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SignUp()));
+                              Get.to(SignUp(),
+                                  transition: Transition.leftToRight);
                             },
                             child: Text1(
                               text: 'Sign-Up',
@@ -188,3 +194,7 @@ class SignIn extends StatelessWidget {
     );
   }
 }
+/*
+
+
+*/

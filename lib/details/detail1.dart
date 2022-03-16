@@ -7,7 +7,7 @@ import 'package:flutter_application_3/constant/const.dart';
 import 'package:flutter_application_3/details/aaignments.dart';
 import 'package:flutter_application_3/details/attachments.dart';
 import 'package:flutter_application_3/details/posts.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:get/get.dart';
 
 class Detail1 extends StatelessWidget {
   final Data data;
@@ -73,33 +73,22 @@ class Detail1 extends StatelessWidget {
                 iconData: Icons.post_add_outlined,
                 text: 'Posts',
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.leftToRight,
-                          child: const Posts()));
+                  Get.to(const Posts(), transition: Transition.leftToRight);
                 },
               ),
               DefaultCont(
                 iconData: Icons.assignment_outlined,
                 text: 'Assignments',
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.leftToRight,
-                          child: Assignments()));
+                  Get.to(Assignments(), transition: Transition.leftToRight);
                 },
               ),
               DefaultCont(
                 iconData: Icons.menu_book_outlined,
                 text: 'Attachments',
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.leftToRight,
-                          child: const Attachments()));
+                  Get.to(const Attachments(),
+                      transition: Transition.leftToRight);
                 },
               ),
             ],

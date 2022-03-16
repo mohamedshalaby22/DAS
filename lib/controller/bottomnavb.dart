@@ -28,4 +28,10 @@ class BottomNavBar extends GetxController {
     currentIndex = index;
     update();
   }
+
+//on Borading Screen
+  var isSelected = 0.obs;
+  changeIsSelected(value) {
+    isSelected.value = value;
+  }
 }

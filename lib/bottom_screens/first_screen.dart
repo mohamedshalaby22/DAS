@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_3/components/text2.dart';
 import 'package:flutter_application_3/constant/const.dart';
 import 'package:flutter_application_3/details/detail1.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:get/get.dart';
 
 class Data {
   String subjects;
@@ -55,12 +55,8 @@ class _FirstScreenState extends State<FirstScreen> {
       floatingActionButton: _currentIndex >= 0
           ? FloatingActionButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    PageTransition(
-                        type: PageTransitionType.leftToRight,
-                        child: Detail1(items[_currentIndex])));
-                //  Get.to(Detail1(items[_currentIndex]));
+                Get.to(Detail1(items[_currentIndex]),
+                    transition: Transition.leftToRight);
               },
               child: const Icon(Icons.arrow_forward_ios_rounded),
             )

@@ -7,8 +7,7 @@ import 'package:flutter_application_3/components/leading_icon.dart';
 import 'package:flutter_application_3/components/text1.dart';
 import 'package:flutter_application_3/constant/const.dart';
 import 'package:flutter_application_3/details/assiements_view.dart';
-
-import 'package:page_transition/page_transition.dart';
+import 'package:get/get.dart';
 
 class Assignments extends StatelessWidget {
   Assignments({Key? key}) : super(key: key);
@@ -80,7 +79,7 @@ class Assignments extends StatelessWidget {
                           }
                           return null;
                         },
-                        type: TextInputType.number,
+                        type: TextInputType.phone,
                         hint: 'enter your id',
                         controller: id,
                         icon: Icons.lock,
@@ -96,11 +95,8 @@ class Assignments extends StatelessWidget {
                     text: 'View Assignment',
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                type: PageTransitionType.leftToRight,
-                                child: const AssignmentsPage()));
+                        Get.to(const AssignmentsPage(),
+                            transition: Transition.leftToRight);
                       }
                     })
               ],
