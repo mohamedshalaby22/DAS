@@ -25,7 +25,6 @@ class Assignments extends StatelessWidget {
         child: Form(
           key: formKey,
           child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
             child: Column(
               // mainAxisAlignment: MainAxisAlignment.center,
               children: [

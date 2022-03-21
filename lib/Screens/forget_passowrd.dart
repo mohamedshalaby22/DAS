@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/Screens/login.dart';
 import 'package:flutter_application_3/components/default_button.dart';
 import 'package:flutter_application_3/components/leading_icon.dart';
 import 'package:flutter_application_3/components/text1.dart';
@@ -80,14 +79,29 @@ class ForgetPassword extends StatelessWidget {
                 const SizedBox(
                   height: defaultPading,
                 ),
-                DefaultButton(
-                    text: 'SEND',
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        controller.ForgetPassword(resetEmail.text);
-                        Get.to(SignIn(), transition: Transition.leftToRight);
-                      }
-                    }),
+                Obx(
+                  () => Column(
+                    children: [
+                      DefaultButton(
+                          text: 'SEND',
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              controller.isLoading.value
+                                  ? null
+                                  : controller.loadCircleProgress();
+                              controller.ForgetPassword(resetEmail.text);
+                            }
+                          }),
+                      const SizedBox(
+                        height: defaultPading,
+                      ),
+                      Align(
+                          child: controller.isLoading.value
+                              ? const CircularProgressIndicator()
+                              : null),
+                    ],
+                  ),
+                )
               ],
             ),
           ),

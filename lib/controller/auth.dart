@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_3/Models/user_model.dart';
+import 'package:flutter_application_3/Screens/login.dart';
 import 'package:flutter_application_3/Services/fire_store.dart';
 import 'package:flutter_application_3/bottom_screens/home_layout.dart';
 import 'package:get/get.dart';
@@ -64,7 +65,9 @@ class AuthController extends GetxController {
 
   void ForgetPassword(String email) async {
     try {
-      await auth.sendPasswordResetEmail(email: email);
+      await auth.sendPasswordResetEmail(email: email).then((value) async {
+        Get.to(SignIn(), transition: Transition.leftToRight);
+      });
       Get.snackbar('Successfully Reseted', 'password Reset Email Sent');
     } on FirebaseException catch (e) {
       Get.snackbar('Faild Reset Password', e.message.toString());

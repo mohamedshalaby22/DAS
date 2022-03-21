@@ -21,8 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(),
@@ -30,15 +29,30 @@ class _SplashScreenState extends State<SplashScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-            child: Container(
-                width: width * 0.60,
-                height: height * 0.45,
-                clipBehavior: Clip.hardEdge,
-                decoration: const BoxDecoration(shape: BoxShape.circle),
-                child: Image.asset('assets/s.jpeg')),
-          ),
+              child: TweenAnimationBuilder(
+                  curve: Curves.easeIn,
+                  tween: Tween<double>(
+                    begin: 60,
+                    end: size.width * 0.60,
+                  ),
+                  duration: const Duration(seconds: 2),
+                  builder: (
+                    BuildContext context,
+                    dynamic value,
+                    child,
+                  ) {
+                    return Container(
+                        width: value,
+                        height: value,
+                        clipBehavior: Clip.hardEdge,
+                        decoration: const BoxDecoration(shape: BoxShape.circle),
+                        child: Image.asset('assets/s.jpeg'));
+                  })),
         ],
       ),
     );
   }
 }
+/*
+
+*/

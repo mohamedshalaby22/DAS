@@ -18,17 +18,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialBinding: Binding(),
-      theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
-          appBarTheme: const AppBarTheme(
-              backgroundColor: Colors.transparent,
-              elevation: 0.0,
-              systemOverlayStyle: SystemUiOverlayStyle(
-                  statusBarColor: Colors.transparent,
-                  statusBarIconBrightness: Brightness.dark))),
-      home: const ControllerView(),
-    );
+        debugShowCheckedModeBanner: false,
+        initialBinding: Binding(),
+        theme: ThemeData(
+            scaffoldBackgroundColor: Colors.white,
+            appBarTheme: const AppBarTheme(
+                backgroundColor: Colors.transparent,
+                elevation: 0.0,
+                systemOverlayStyle: SystemUiOverlayStyle(
+                    statusBarColor: Colors.transparent,
+                    statusBarIconBrightness: Brightness.dark))),
+        home: const ControllerView());
   }
 }

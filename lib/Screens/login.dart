@@ -148,7 +148,7 @@ class SignIn extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      GestureDetector(
+                      InkWell(
                         onTap: () {
                           Get.to(ForgetPassword(),
                               transition: Transition.leftToRight);

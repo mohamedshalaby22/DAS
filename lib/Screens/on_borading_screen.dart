@@ -98,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                       const Spacer(),
                       SizedBox(
                           width: width,
-                          height: height * 0.35,
+                          height: height * 0.30,
                           child: Image.asset(splashData[index]['image']))
                     ],
                   ),

@@ -31,9 +31,9 @@ class DefaultButton extends StatelessWidget {
             onPressed();
           },
           child: Text(text,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 18,
-                color: Colors.white,
+                color: wprimary,
               ))),
     );
   }
