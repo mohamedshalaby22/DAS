@@ -13,7 +13,6 @@ import 'forget_passowrd.dart';
 
 class SignIn extends StatelessWidget {
   SignIn({Key? key}) : super(key: key);
-  //var isLoading = false;
   var formKey = GlobalKey<FormState>();
   AuthController controller = AuthController();
 
@@ -84,7 +83,11 @@ class SignIn extends StatelessWidget {
                           },
                           validator: (value) {
                             if (value.isEmpty) {
-                              return 'Please enter the email';
+                              return 'Email musn\'t be empty';
+                            } else if (!RegExp(
+                                    r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}')
+                                .hasMatch(value)) {
+                              return 'please correct the Email';
                             }
                             return null;
                           },
@@ -103,19 +106,18 @@ class SignIn extends StatelessWidget {
                         },
                         validator: (value) {
                           if (value.isEmpty) {
-                            return 'Please enter the password';
+                            return 'password musn\'t be empty';
+                          } else if (value.length < 8) {
+                            return 'password must be Strong';
                           }
                           return null;
                         },
                         type: TextInputType.visiblePassword,
                         icon: Icons.lock,
                         isPassword: controller.isPassword.value,
-                        suffix: controller.isPassword.value
-                            ? Icons.visibility_off_outlined
-                            : Icons.visibility_outlined,
+                        suffix: controller.suffixIcon,
                         suffixPress: () {
-                          controller.isPassword.value =
-                              !controller.isPassword.value;
+                          controller.changeSuffixIcon();
                         },
                       ),
                       const SizedBox(
@@ -194,7 +196,3 @@ class SignIn extends StatelessWidget {
     );
   }
 }
-/*
-
-
-*/

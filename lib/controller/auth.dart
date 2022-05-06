@@ -1,7 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, avoid_print
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_application_3/Models/user_model.dart';
 import 'package:flutter_application_3/Screens/login.dart';
 import 'package:flutter_application_3/Services/fire_store.dart';
@@ -12,7 +12,7 @@ class AuthController extends GetxController {
   String? email, password, name, selectedItem;
   var resetEmail = TextEditingController();
   var isLoading = false.obs;
-  RxBool isPassword = true.obs;
+
   var isChecked = false.obs;
   var isProfilePickedPath = false.obs;
   var profilePickedPath = "".obs;
@@ -36,7 +36,7 @@ class AuthController extends GetxController {
           .then((value) => Get.snackbar(
               'Successfully Login', 'Welcome In Our App',
               snackPosition: SnackPosition.BOTTOM));
-      Get.offAll(const HomeLayOut(), transition: Transition.leftToRight);
+      Get.offAll(() => const HomeLayOut(), transition: Transition.leftToRight);
     } on FirebaseException catch (e) {
       print(e.message);
       Get.snackbar('Error Login Account', e.message.toString(),
@@ -56,7 +56,7 @@ class AuthController extends GetxController {
       });
       Get.snackbar('Successfully Login', 'Welcome $name',
           snackPosition: SnackPosition.BOTTOM);
-      Get.offAll(const HomeLayOut(), transition: Transition.leftToRight);
+      Get.offAll(() => const HomeLayOut(), transition: Transition.leftToRight);
     } on FirebaseException catch (e) {
       Get.snackbar('Error Login Account', e.message.toString(),
           snackPosition: SnackPosition.BOTTOM);
@@ -66,7 +66,7 @@ class AuthController extends GetxController {
   void ForgetPassword(String email) async {
     try {
       await auth.sendPasswordResetEmail(email: email).then((value) async {
-        Get.to(SignIn(), transition: Transition.leftToRight);
+        Get.to(() => SignIn(), transition: Transition.leftToRight);
       });
       Get.snackbar('Successfully Reseted', 'password Reset Email Sent');
     } on FirebaseException catch (e) {
@@ -112,5 +112,15 @@ class AuthController extends GetxController {
   void pickedPath(String path) {
     profilePickedPath.value = path;
     isProfilePickedPath.value = true;
+  }
+
+  //Suffix Icon password
+  RxBool isPassword = true.obs;
+  IconData suffixIcon = Icons.visibility_off_outlined;
+  void changeSuffixIcon() {
+    isPassword.value = !isPassword.value;
+    suffixIcon = isPassword.value
+        ? Icons.visibility_off_outlined
+        : Icons.visibility_outlined;
   }
 }

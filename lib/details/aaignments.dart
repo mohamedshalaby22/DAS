@@ -11,8 +11,11 @@ import 'package:get/get.dart';
 
 class Assignments extends StatelessWidget {
   Assignments({Key? key}) : super(key: key);
+
   var formKey = GlobalKey<FormState>();
+
   var id = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +29,6 @@ class Assignments extends StatelessWidget {
           key: formKey,
           child: SingleChildScrollView(
             child: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(
                   children: [
@@ -74,7 +76,9 @@ class Assignments extends StatelessWidget {
                       DefaultFormField(
                         validator: (value) {
                           if (value.isEmpty) {
-                            return 'Please enter the iD';
+                            return 'ID musn\'t be empty';
+                          } else if (value.length < 15) {
+                            return 'ID must be 14 num';
                           }
                           return null;
                         },
@@ -94,7 +98,7 @@ class Assignments extends StatelessWidget {
                     text: 'View Assignment',
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        Get.to(const AssignmentsPage(),
+                        Get.offAll(() => const AssignmentsPage(),
                             transition: Transition.leftToRight);
                       }
                     })

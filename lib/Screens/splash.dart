@@ -14,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Timer(const Duration(seconds: 3), () {
-      Get.offAll(const HomeLayOut());
+      Get.offAll(() => const HomeLayOut());
     });
     super.initState();
   }
@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
         children: [
           Center(
               child: TweenAnimationBuilder(
-                  curve: Curves.easeIn,
+                  curve: Curves.bounceOut,
                   tween: Tween<double>(
                     begin: 60,
                     end: size.width * 0.60,

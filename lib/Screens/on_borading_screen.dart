@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
       "image": "assets/b3.png"
     },
   ];
-  // int _currentIndex = 0;
+
   final PageController _controller = PageController();
 
   @override
@@ -45,28 +45,30 @@ class _HomePageState extends State<HomePage> {
     BottomNavBar controller = BottomNavBar();
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        actions: [
-          TextButton(
-            onPressed: () {
-              _controller.jumpToPage(splashData.length);
-            },
-            child: const Text(
-              'Skip',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16,
+    return Obx(
+      () => Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          actions: [
+            TextButton(
+              onPressed: () {
+                _controller.jumpToPage(splashData.length);
+              },
+              child: Text(
+                controller.isSelected.value == splashData.length - 1
+                    ? ''
+                    : 'Skip',
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                ),
               ),
-            ),
-          )
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Obx(
-          () => Column(
+            )
+          ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
             children: [
               Expanded(
                 flex: 3,
@@ -117,8 +119,8 @@ class _HomePageState extends State<HomePage> {
                         3,
                         (index) => AnimatedContainer(
                           duration: const Duration(milliseconds: 500),
-                          margin: const EdgeInsets.only(right: 4),
-                          width: controller.isSelected.value == index ? 40 : 15,
+                          margin: const EdgeInsets.only(right: 7),
+                          width: controller.isSelected.value == index ? 35 : 15,
                           height: 5,
                           decoration: BoxDecoration(
                               color: controller.isSelected.value == index
@@ -137,7 +139,7 @@ class _HomePageState extends State<HomePage> {
                         onPressed: () {
                           if (controller.isSelected.value ==
                               splashData.length - 1) {
-                            Get.offAll(SignIn(),
+                            Get.offAll(() => SignIn(),
                                 transition: Transition.leftToRight);
                           }
                           _controller.nextPage(

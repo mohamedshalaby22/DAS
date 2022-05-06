@@ -16,7 +16,8 @@ class ScorePage extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-              Get.offAll(Assignments(), transition: Transition.leftToRight);
+              Get.offAll(() => Assignments(),
+                  transition: Transition.leftToRight);
             },
             icon: const Icon(
               Icons.arrow_back_ios,

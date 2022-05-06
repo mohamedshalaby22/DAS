@@ -37,7 +37,7 @@ class Attachments extends StatelessWidget {
                 image: 'assets/grades.jpg',
                 text: 'Subjects Degress',
                 onPressed: () {
-                  Get.to(const DegressPage(),
+                  Get.to(() => const DegressPage(),
                       transition: Transition.leftToRight);
                 },
               ),

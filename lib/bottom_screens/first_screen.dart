@@ -1,4 +1,5 @@
 // ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/components/text2.dart';
 import 'package:flutter_application_3/constant/const.dart';
@@ -8,10 +9,10 @@ import 'package:get/get.dart';
 class Data {
   String subjects;
   String doctorName;
-  Color color;
+  String image;
   Data({
     required this.subjects,
-    required this.color,
+    required this.image,
     required this.doctorName,
   });
 }
@@ -27,23 +28,28 @@ class _FirstScreenState extends State<FirstScreen> {
   List<Data> items = [
     Data(
         subjects: 'Computer Graphics',
-        color: Colors.purpleAccent,
+        image:
+            'https://images.unsplash.com/photo-1606166325683-e6deb697d301?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1485&q=80',
         doctorName: 'Marawa Kashaba'),
     Data(
         subjects: 'Wireless and\nMobile NetWorks',
-        color: Colors.lightGreenAccent,
+        image:
+            'https://images.unsplash.com/photo-1597733336794-12d05021d510?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80',
         doctorName: 'Ehab Rushdy'),
     Data(
         subjects: 'Virtual Reality',
-        color: Colors.amber,
+        image:
+            'https://images.unsplash.com/photo-1563372590-aa093423dcbe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1622&q=80',
         doctorName: 'Osama ElKomy'),
     Data(
         subjects: 'Selected Topics',
-        color: Colors.pinkAccent,
+        image:
+            'https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
         doctorName: 'Walled Kheder '),
     Data(
         subjects: 'Computer Animation',
-        color: Colors.lightBlueAccent,
+        image:
+            'https://images.unsplash.com/photo-1625014618427-fbc980b974f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80',
         doctorName: 'Hanna Hamaza '),
   ];
 
@@ -55,7 +61,7 @@ class _FirstScreenState extends State<FirstScreen> {
       floatingActionButton: _currentIndex >= 0
           ? FloatingActionButton(
               onPressed: () {
-                Get.to(Detail1(items[_currentIndex]),
+                Get.to(() => Detail1(items[_currentIndex]),
                     transition: Transition.leftToRight);
               },
               child: const Icon(Icons.arrow_forward_ios_rounded),
@@ -116,56 +122,103 @@ class _FirstScreenState extends State<FirstScreen> {
                       crossAxisCount: 2,
                       mainAxisSpacing: defaultPading,
                       crossAxisSpacing: defaultPading),
-                  itemBuilder: (context, index) => GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _currentIndex = index;
-                          });
-                        },
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 400),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.grey.shade50,
-                              border: Border.all(
-                                  width: 1,
-                                  color: _currentIndex == index
-                                      ? primaryColor
-                                      : Colors.grey.shade200),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.blue.shade50,
-                                    offset: const Offset(4, 4),
-                                    blurRadius: 15,
-                                    spreadRadius: 1),
-                              ]),
-                          child: Center(
-                              child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CircleAvatar(
-                                radius: 25,
-                                backgroundColor: items[index].color,
-                                child: Text(
-                                  items[index].subjects.substring(0, 1),
-                                  style: const TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onLongPress: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            actions: [
+                              TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor: Colors.blue),
+                                  onPressed: () =>
+                                      Navigator.pop(context, 'Cancel'),
+                                  child: const Text(
+                                    'Cancel',
+                                    style: TextStyle(color: Colors.white),
+                                  )),
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                    backgroundColor: Colors.redAccent),
+                                onPressed: () =>
+                                    Navigator.pop(context, 'Delete Subject'),
+                                child: const Text(
+                                  'Delete Subject',
+                                  style: TextStyle(color: Colors.white),
                                 ),
                               ),
-                              const SizedBox(
-                                height: defaultPading,
+                            ],
+                            backgroundColor: Colors.white,
+                            title: const Text(
+                              'Delete Subject',
+                            ),
+                            content: const Text(
+                                'Are you sure that you would like to Delete Subject? You will lose this Subject'),
+                          ),
+                        );
+                      },
+                      onTap: () {
+                        setState(() {
+                          _currentIndex = index;
+                        });
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 400),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.grey.shade50,
+                            border: Border.all(
+                                width: 1,
+                                color: _currentIndex == index
+                                    ? primaryColor
+                                    : Colors.grey.shade200),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.blue.shade50,
+                                  offset: const Offset(4, 4),
+                                  blurRadius: 15,
+                                  spreadRadius: 1),
+                            ]),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 90,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade200,
+                                borderRadius: const BorderRadius.vertical(
+                                    top: Radius.circular(10)),
                               ),
-                              Text(
+                              child: Container(
+                                  clipBehavior: Clip.hardEdge,
+                                  decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(10)),
+                                  ),
+                                  child: Image.network(
+                                    items[index].image,
+                                    fit: BoxFit.fill,
+                                  )),
+                            ),
+                            const SizedBox(
+                              height: defaultPading,
+                            ),
+                            Expanded(
+                              child: Text(
                                 items[index].subjects,
                                 style: const TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          )),
+                              ),
+                            ),
+                          ],
                         ),
-                      )),
+                      ),
+                    );
+                  }),
             ),
           ],
         ),

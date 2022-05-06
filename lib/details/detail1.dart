@@ -73,21 +73,23 @@ class Detail1 extends StatelessWidget {
                 iconData: Icons.post_add_outlined,
                 text: 'Posts',
                 onPressed: () {
-                  Get.to(const Posts(), transition: Transition.leftToRight);
+                  Get.to(() => const Posts(),
+                      transition: Transition.leftToRight);
                 },
               ),
               DefaultCont(
                 iconData: Icons.assignment_outlined,
                 text: 'Assignments',
                 onPressed: () {
-                  Get.to(Assignments(), transition: Transition.leftToRight);
+                  Get.to(() => Assignments(),
+                      transition: Transition.leftToRight);
                 },
               ),
               DefaultCont(
                 iconData: Icons.menu_book_outlined,
                 text: 'Attachments',
                 onPressed: () {
-                  Get.to(const Attachments(),
+                  Get.to(() => const Attachments(),
                       transition: Transition.leftToRight);
                 },
               ),

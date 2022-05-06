@@ -104,7 +104,11 @@ class SignUp extends StatelessWidget {
                           },
                           validator: (value) {
                             if (value.isEmpty) {
-                              return 'Please enter the email';
+                              return 'Email musn\'t be empty';
+                            } else if (!RegExp(
+                                    r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}')
+                                .hasMatch(value)) {
+                              return 'please correct the Email';
                             }
                             return null;
                           },
@@ -120,19 +124,18 @@ class SignUp extends StatelessWidget {
                       DefaultFormField(
                         validator: (value) {
                           if (value.isEmpty) {
-                            return 'Please enter the password';
+                            return 'password musn\'t be empty';
+                          } else if (value.length < 8) {
+                            return 'password must be Strong';
                           }
                           return null;
                         },
                         type: TextInputType.visiblePassword,
                         icon: Icons.lock,
                         isPassword: controller.isPassword.value,
-                        suffix: controller.isPassword.value
-                            ? Icons.visibility_off_outlined
-                            : Icons.visibility_outlined,
+                        suffix: controller.suffixIcon,
                         suffixPress: () {
-                          controller.isPassword.value =
-                              !controller.isPassword.value;
+                          controller.changeSuffixIcon();
                         },
                         onSave: (value) {
                           controller.password = value;

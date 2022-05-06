@@ -4,18 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_3/constant/const.dart';
 
 class DefaultFormField extends StatelessWidget {
-  DefaultFormField({
-    Key? key,
-    required this.validator,
-    required this.type,
-    required this.icon,
-    required this.onSave,
-    this.suffixPress,
-    this.isPassword = false,
-    this.suffix,
-    this.controller,
-    this.hint,
-  }) : super(key: key);
+  DefaultFormField(
+      {Key? key,
+      required this.validator,
+      required this.type,
+      required this.icon,
+      required this.onSave,
+      this.suffixPress,
+      this.isPassword = false,
+      this.suffix,
+      this.controller,
+      this.hint,
+      this.maxLines = 1})
+      : super(key: key);
   TextInputType type;
   TextEditingController? controller;
   IconData icon;
@@ -25,9 +26,11 @@ class DefaultFormField extends StatelessWidget {
   FormFieldValidator validator;
   bool isPassword;
   String? hint;
+  int maxLines;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLines: maxLines,
       controller: controller,
       validator: validator,
       obscureText: isPassword,
