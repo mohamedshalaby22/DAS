@@ -56,6 +56,9 @@ class _PostsState extends State<Posts> {
   }
 }
 
+// ignore: constant_identifier_names
+enum _MenuValue { update, delete }
+
 class DefPosts extends StatelessWidget {
   const DefPosts({
     Key? key,
@@ -63,19 +66,60 @@ class DefPosts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void cheackOnDeleted() {
+      final snackbar = SnackBar(
+        padding: const EdgeInsets.all(20),
+        margin: const EdgeInsets.all(20),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        content: const Text(
+          'Post Deleted Successfully!',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+    }
+
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
         children: [
-          const ListTile(
-            leading: CircleAvatar(
-                radius: 20, backgroundImage: AssetImage('assets/p1.png')),
-            title: Text(
-              'Dr:Marawa Kashaba',
-              style: TextStyle(color: Colors.black),
-            ),
-            trailing: Icon(Icons.more_horiz_rounded),
-          ),
+          ListTile(
+              leading: const CircleAvatar(
+                  radius: 20, backgroundImage: AssetImage('assets/p1.png')),
+              title: const Text(
+                'Dr:Marawa Kashaba',
+                style: TextStyle(color: Colors.black),
+              ),
+              trailing: PopupMenuButton<_MenuValue>(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                icon: const Icon(Icons.more_horiz),
+                itemBuilder: (context) => [
+                  const PopupMenuItem(
+                    child: Text('Update'),
+                    value: _MenuValue.update,
+                  ),
+                  const PopupMenuDivider(height: 3),
+                  const PopupMenuItem(
+                    child: Text('Delete'),
+                    value: _MenuValue.delete,
+                  ),
+                ],
+                onSelected: (value) {
+                  switch (value) {
+                    case _MenuValue.update:
+                      Get.to(() => const AddPostScreen(),
+                          transition: Transition.leftToRight);
+                      break;
+                    case _MenuValue.delete:
+                      cheackOnDeleted();
+                      break;
+                  }
+                },
+              )),
           Container(
             margin: const EdgeInsets.only(
                 top: defaultPading / 2, bottom: defaultPading),

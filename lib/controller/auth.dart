@@ -29,22 +29,19 @@ class AuthController extends GetxController {
     _user.bindStream(auth.authStateChanges());
   }
 
-  void SignInWithEmailAndPassword() async {
+  void SignInWithEmailAndPassword(context) async {
     try {
       await auth
           .signInWithEmailAndPassword(email: email!, password: password!)
-          .then((value) => Get.snackbar(
-              'Successfully Login', 'Welcome In Our App',
-              snackPosition: SnackPosition.BOTTOM));
+          .then((value) => snackBar(context, 'Successfully Login!'));
       Get.offAll(() => const HomeLayOut(), transition: Transition.leftToRight);
     } on FirebaseException catch (e) {
       print(e.message);
-      Get.snackbar('Error Login Account', e.message.toString(),
-          snackPosition: SnackPosition.BOTTOM);
+      snackBar(context, e.message.toString());
     }
   }
 
-  void CreateAccountWithEmailAndPassword() async {
+  void CreateAccountWithEmailAndPassword(context) async {
     try {
       await auth
           .createUserWithEmailAndPassword(
@@ -54,23 +51,21 @@ class AuthController extends GetxController {
           .then((user) async {
         saveUser(user);
       });
-      Get.snackbar('Successfully Login', 'Welcome $name',
-          snackPosition: SnackPosition.BOTTOM);
+      snackBar(context, 'Successfully Registerd!  $name');
       Get.offAll(() => const HomeLayOut(), transition: Transition.leftToRight);
     } on FirebaseException catch (e) {
-      Get.snackbar('Error Login Account', e.message.toString(),
-          snackPosition: SnackPosition.BOTTOM);
+      snackBar(context, e.message.toString());
     }
   }
 
-  void ForgetPassword(String email) async {
+  void ForgetPassword(String email, context) async {
     try {
       await auth.sendPasswordResetEmail(email: email).then((value) async {
         Get.to(() => SignIn(), transition: Transition.leftToRight);
       });
-      Get.snackbar('Successfully Reseted', 'password Reset Email Sent');
+      snackBar(context, 'password Reseted Check Email!');
     } on FirebaseException catch (e) {
-      Get.snackbar('Faild Reset Password', e.message.toString());
+      snackBar(context, e.message.toString());
     }
   }
 
@@ -122,5 +117,21 @@ class AuthController extends GetxController {
     suffixIcon = isPassword.value
         ? Icons.visibility_off_outlined
         : Icons.visibility_outlined;
+  }
+
+  void snackBar(BuildContext context, String text) {
+    final snackbar = SnackBar(
+      padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.all(20),
+      behavior: SnackBarBehavior.floating,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      content: Text(
+        text,
+        style: const TextStyle(
+          color: Colors.white,
+        ),
+      ),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackbar);
   }
 }

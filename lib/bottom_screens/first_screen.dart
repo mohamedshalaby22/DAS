@@ -5,6 +5,7 @@ import 'package:flutter_application_3/components/text2.dart';
 import 'package:flutter_application_3/constant/const.dart';
 import 'package:flutter_application_3/details/detail1.dart';
 import 'package:get/get.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class Data {
   String subjects;
@@ -125,40 +126,7 @@ class _FirstScreenState extends State<FirstScreen> {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onLongPress: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
-                            actions: [
-                              TextButton(
-                                  style: TextButton.styleFrom(
-                                      backgroundColor: Colors.blue),
-                                  onPressed: () =>
-                                      Navigator.pop(context, 'Cancel'),
-                                  child: const Text(
-                                    'Cancel',
-                                    style: TextStyle(color: Colors.white),
-                                  )),
-                              TextButton(
-                                style: TextButton.styleFrom(
-                                    backgroundColor: Colors.redAccent),
-                                onPressed: () =>
-                                    Navigator.pop(context, 'Delete Subject'),
-                                child: const Text(
-                                  'Delete Subject',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ],
-                            backgroundColor: Colors.white,
-                            title: const Text(
-                              'Delete Subject',
-                            ),
-                            content: const Text(
-                                'Are you sure that you would like to Delete Subject? You will lose this Subject'),
-                          ),
-                        );
+                        deafultDialog(context);
                       },
                       onTap: () {
                         setState(() {
@@ -198,8 +166,8 @@ class _FirstScreenState extends State<FirstScreen> {
                                     borderRadius: BorderRadius.vertical(
                                         top: Radius.circular(10)),
                                   ),
-                                  child: Image.network(
-                                    items[index].image,
+                                  child: CachedNetworkImage(
+                                    imageUrl: items[index].image,
                                     fit: BoxFit.fill,
                                   )),
                             ),
@@ -225,13 +193,36 @@ class _FirstScreenState extends State<FirstScreen> {
       ),
     );
   }
+
+  Future<dynamic> deafultDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        actions: [
+          TextButton(
+              style: TextButton.styleFrom(backgroundColor: Colors.blue),
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child: const Text(
+                'Cancel',
+                style: TextStyle(color: Colors.white),
+              )),
+          TextButton(
+            style: TextButton.styleFrom(backgroundColor: Colors.redAccent),
+            onPressed: () => Navigator.pop(context, 'Delete Subject'),
+            child: const Text(
+              'Delete Subject',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
+        backgroundColor: Colors.white,
+        title: const Text(
+          'Delete Subject',
+        ),
+        content: const Text(
+            'Are you sure that you would like to Delete Subject? You will lose this Subject'),
+      ),
+    );
+  }
 }
-
-
-/*
-
- var width = MediaQuery.of(context).size.width;
- var height = MediaQuery.of(context).size.height;
-
-
-*/

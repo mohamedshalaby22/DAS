@@ -107,8 +107,6 @@ class SignIn extends StatelessWidget {
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'password musn\'t be empty';
-                          } else if (value.length < 8) {
-                            return 'password must be Strong';
                           }
                           return null;
                         },
@@ -131,7 +129,8 @@ class SignIn extends StatelessWidget {
                             controller.isLoading.value
                                 ? null
                                 : controller.loadCircleProgress();
-                            controller.SignInWithEmailAndPassword();
+                            controller.SignInWithEmailAndPassword(context);
+                            // controller.cheackOnLogin(context);
                           }
                         },
                       ),

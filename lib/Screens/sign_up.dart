@@ -125,8 +125,6 @@ class SignUp extends StatelessWidget {
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'password musn\'t be empty';
-                          } else if (value.length < 8) {
-                            return 'password must be Strong';
                           }
                           return null;
                         },
@@ -196,7 +194,8 @@ class SignUp extends StatelessWidget {
                             controller.isLoading.value
                                 ? null
                                 : controller.loadCircleProgress();
-                            controller.CreateAccountWithEmailAndPassword();
+                            controller.CreateAccountWithEmailAndPassword(
+                                context);
                             getUser();
                           }
                         },

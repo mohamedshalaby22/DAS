@@ -1,7 +1,11 @@
+import 'dart:developer';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/components/default_button.dart';
 import 'package:flutter_application_3/components/formfield.dart';
 import 'package:flutter_application_3/constant/const.dart';
+import 'package:open_file/open_file.dart';
 
 import '../components/text1.dart';
 
@@ -106,7 +110,15 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   height: defaultPading / 2,
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () async {
+                    final result = await FilePicker.platform.pickFiles();
+                    if (result == null) {
+                      return;
+                    }
+                    final file = result.files.first;
+                    openFile(file);
+                    log(file.name);
+                  },
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(defaultPading),
@@ -145,5 +157,9 @@ class _AddPostScreenState extends State<AddPostScreen> {
             }),
       ),
     );
+  }
+
+  void openFile(PlatformFile file) {
+    OpenFile.open(file.path!);
   }
 }

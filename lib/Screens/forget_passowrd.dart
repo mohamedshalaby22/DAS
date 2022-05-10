@@ -89,7 +89,8 @@ class ForgetPassword extends StatelessWidget {
                               controller.isLoading.value
                                   ? null
                                   : controller.loadCircleProgress();
-                              controller.ForgetPassword(resetEmail.text);
+                              controller.ForgetPassword(
+                                  resetEmail.text, context);
                             }
                           }),
                       const SizedBox(
