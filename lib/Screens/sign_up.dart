@@ -194,8 +194,8 @@ class SignUp extends StatelessWidget {
                             controller.isLoading.value
                                 ? null
                                 : controller.loadCircleProgress();
-                            controller.CreateAccountWithEmailAndPassword(
-                                context);
+                            // controller.CreateAccountWithEmailAndPassword(
+                            //     context);
                             getUser();
                           }
                         },

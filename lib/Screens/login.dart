@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/Screens/sign_up.dart';
+import 'package:flutter_application_3/Services/api.dart';
 
 import 'package:flutter_application_3/components/default_button.dart';
 import 'package:flutter_application_3/components/formfield.dart';
@@ -123,13 +124,20 @@ class SignIn extends StatelessWidget {
                       ),
                       DefaultButton(
                         text: 'Sign-In',
-                        onPressed: () {
+                        onPressed: () async {
                           formKey.currentState!.save();
                           if (formKey.currentState!.validate()) {
-                            controller.isLoading.value
-                                ? null
-                                : controller.loadCircleProgress();
-                            controller.SignInWithEmailAndPassword(context);
+                            final response = await Api.loginStudent(
+                                controller.email!, controller.password!,
+                                showLoading: true);
+                            print(response);
+                            if (response.isNotEmpty) {
+                              // هنا احفظ اليوسر مثلا  و بعدين وديه ع الهوم  او اعرضه رسالة اى حاجة بقا 
+                              // save user 
+                              // user logged successfully
+                              // go to home 
+                            }
+                            // controller.SignInWithEmailAndPassword(context);
                             // controller.cheackOnLogin(context);
                           }
                         },

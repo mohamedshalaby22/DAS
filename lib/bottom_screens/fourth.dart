@@ -2,7 +2,6 @@
 
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/Screens/on_borading_screen.dart';
 import 'package:flutter_application_3/components/default_button.dart';
@@ -26,7 +25,7 @@ class _FourthScreenState extends State<FourthScreen> {
 
   AuthController controller = Get.find();
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
 
   File? pickedFile;
 
@@ -132,7 +131,7 @@ class _FourthScreenState extends State<FourthScreen> {
                 child: DefaultButton(
                     text: 'LOG OUT',
                     onPressed: () {
-                      _auth.signOut();
+                      // _auth.signOut();
                       Get.offAll(const HomePage());
                     }),
               ),
