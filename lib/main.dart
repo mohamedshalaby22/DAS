@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_3/Screens/controlle_view.dart';
+import 'package:flutter_application_3/Screens/splash.dart';
+import 'package:flutter_application_3/Services/sharedprefrences.dart';
 import 'package:get/get.dart';
 import 'Binding/binding.dart';
+
+bool isFirst = true;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // await Firebase.initializeApp();
+  isFirst = await SharedPrefrencesStorage.getIsFirst();
   runApp(const MyApp());
 }
 
@@ -27,6 +31,6 @@ class MyApp extends StatelessWidget {
                 systemOverlayStyle: SystemUiOverlayStyle(
                     statusBarColor: Colors.transparent,
                     statusBarIconBrightness: Brightness.dark))),
-        home: const ControllerView());
+        home: const SplashScreen());
   }
 }

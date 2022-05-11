@@ -1,7 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/Services/api.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {

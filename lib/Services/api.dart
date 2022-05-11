@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter_application_3/Models/user_model.dart';
 import 'package:flutter_application_3/Services/sharedprefrences.dart';
 import 'package:flutter_application_3/alerts.dart';
+import 'package:flutter_application_3/bottom_screens/home_layout.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
@@ -32,7 +34,10 @@ class Api {
       if (response.statusCode == 200 && parsed['status'] == 200) {
         String token = parsed['data']['token'];
         await SharedPrefrencesStorage.saveToken(token);
-        return parsed['data'];
+        final user = UserModel.fromJson(parsed['data']);
+        await SharedPrefrencesStorage.saveUser(jsonEncode(user.toJson()));
+        Get.offAll(() => const HomeLayOut());
+        return {};
       }
       Alerts.showSnackBar(msg: parsed['message']);
     } catch (e) {

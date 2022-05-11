@@ -1,4 +1,5 @@
 // ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/Screens/sign_up.dart';
 import 'package:flutter_application_3/Services/api.dart';
@@ -127,16 +128,10 @@ class SignIn extends StatelessWidget {
                         onPressed: () async {
                           formKey.currentState!.save();
                           if (formKey.currentState!.validate()) {
-                            final response = await Api.loginStudent(
+                             await Api.loginStudent(
                                 controller.email!, controller.password!,
                                 showLoading: true);
-                            print(response);
-                            if (response.isNotEmpty) {
-                              // هنا احفظ اليوسر مثلا  و بعدين وديه ع الهوم  او اعرضه رسالة اى حاجة بقا 
-                              // save user 
-                              // user logged successfully
-                              // go to home 
-                            }
+                            // متعملش حاجة هنا خالص
                             // controller.SignInWithEmailAndPassword(context);
                             // controller.cheackOnLogin(context);
                           }

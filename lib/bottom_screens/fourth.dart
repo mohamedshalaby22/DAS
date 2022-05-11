@@ -3,7 +3,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/Screens/on_borading_screen.dart';
+import 'package:flutter_application_3/Screens/login.dart';
 import 'package:flutter_application_3/components/default_button.dart';
 import 'package:flutter_application_3/components/text1.dart';
 import 'package:flutter_application_3/components/text2.dart';
@@ -132,7 +132,7 @@ class _FourthScreenState extends State<FourthScreen> {
                     text: 'LOG OUT',
                     onPressed: () {
                       // _auth.signOut();
-                      Get.offAll(const HomePage());
+                      Get.offAll(SignIn());
                     }),
               ),
               const SizedBox(

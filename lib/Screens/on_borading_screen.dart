@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/Screens/login.dart';
+import 'package:flutter_application_3/Services/sharedprefrences.dart';
 import 'package:flutter_application_3/components/default_button.dart';
 import 'package:flutter_application_3/constant/const.dart';
 import 'package:get/get.dart';
 
 import '../controller/bottomnavb.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class OnBoardingScrean extends StatefulWidget {
+  const OnBoardingScrean({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<OnBoardingScrean> createState() => _OnBoardingScreanState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _OnBoardingScreanState extends State<OnBoardingScrean> {
   List splashData = [
     {
       "text":
@@ -136,9 +137,11 @@ class _HomePageState extends State<HomePage> {
                             controller.isSelected.value == splashData.length - 1
                                 ? 'Continue'
                                 : 'Next',
-                        onPressed: () {
+                        onPressed: () async {
                           if (controller.isSelected.value ==
                               splashData.length - 1) {
+                            await SharedPrefrencesStorage.saveIsFirst(false);
+
                             Get.offAll(() => SignIn(),
                                 transition: Transition.leftToRight);
                           }
